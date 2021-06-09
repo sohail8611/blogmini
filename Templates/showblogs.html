@@ -42,6 +42,7 @@
     {% else %}
 
     {%for blog in myblogs%}
+    <strong style="color:white;font-size:15px;">Total Likes:=>{{total_likes}}</strong><br /><br />
     <strong style="color:white;font-size:10px;">{{blog.created_at}}</strong><br />
     <u>
         <h1 style="        color: red;
@@ -51,6 +52,14 @@
     </u>
     <h1 style="color:orange;font-size:20px;">{{blog.subject}}</h1>
     <p4 style="color:white;font-size:15px;">{{blog.text}}</p4>
+
+    <br /><br />
+    <h1 style="color:white;font-size:30px;"> Comments:-</h1>
+    {% for comments in come%}
+
+    <strong style="color:white;font-size:15px;">{{comments.username}}:-</strong>
+    <p4 style="color:yellow;font-size:10px;">{{comments.comment}}</p4><br />
+    {% endfor %}
 
 
     {% endfor %}
