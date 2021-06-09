@@ -21,6 +21,7 @@ urlpatterns = [
     path('myblogs',views.myblogs,name='myblogs'),
     path('showblogs/<int:blogid>',views.showblogs,name='showblogs'),
     path('myblogs/edit/<int:blogid>',views.editblog,name='edit'),
+    path('showblogs/like/<int:blogidd>',views.like,name='showblogs')
     
 
     
