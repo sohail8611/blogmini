@@ -1,0 +1,31 @@
+<a href="/profile" style="color:#FF0000;">Go to Profile</a>
+<br /><br /><br /><br />
+<form action="writeblog" method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+
+    <input type="text" name="title" placeholder="Title" required /><br /><br />
+
+    <input type="text" name="subject" placeholder="Subject" required /><br />
+
+
+
+
+    <br />
+    <p4>Text</p4><br />
+    <textarea rows="10" cols="100" name="text" placeholder="Write Here!" required>
+            
+         </textarea><br>
+
+
+    <br />
+    <input type="submit" value="Post" />
+
+
+
+</form>
+
+   {% for message in messages %}
+{{message}}
+    {%endfor%}

@@ -1,0 +1,64 @@
+{% if user.is_authenticated%}
+
+<h4>
+    Welcome {{user.first_name}}
+</h4><!-- Normal User View Block -->
+{% if user.is_normal%}
+
+<a href="writeblog"><span class="fa fa-cog mr-3"></span>Write New Blog</a></b>
+<br />
+<br />
+<a href="myblogs"><span class="fa fa-cog mr-3"></span>My Blogs</a></b>
+<br />
+<br />
+<a href="logout" style="color:darkgreen;">Logout</a>
+
+
+
+
+
+
+
+
+<!-- Admin view Block -->
+{% else %}
+<a href="logout" style="color:darkgreen;">Logout</a>
+<br />
+<h4> As an Admin you can View/Delete the blogs below</h4>
+{% for blog in blog_of_user%}
+<strong style="color:darkred;font-size:25;">USER_ID: {{blog.user_id}}</strong>
+<br />
+<strong style="color:black;font-size:25;">BLOG_ID: {{blog.id}}</strong>
+<br />
+<strong style="color:black;font-size:25;">Title: {{blog.title}}</strong>
+<br />
+<strong style="color:Black;font-size:25;">Subject: {{blog.subject}}</strong><br />
+<strong style="color:Black;font-size:25;">Created_at {{blog.created_at}}</strong>
+<br />
+<br />
+<form action="/showblogs/{{blog.id}}" method="post">
+    {% csrf_token%}
+    <input type="hidden" name="blogid" value="{{blog.id}}" />
+    <input type="submit" value="View This Blog" formtarget="_blank" />
+
+</form>
+<form action="/profile" method="post">
+    {% csrf_token%}
+    <input type="hidden" name="blogid" value="{{blog.id}}" />
+    <input type="submit" value="delete This Blog" />
+</form>
+{%endfor%}
+
+
+
+
+
+
+
+
+{% endif %}
+
+{% else %}
+<meta http-equiv="refresh" content="0; url = /" />
+{% endif %}
+

@@ -1,0 +1,32 @@
+
+{% if user.is_authenticated%}
+<a href="/myblogs" style="color:#FF0000;">GoBack</a>
+<br /><br /><br />
+<form action="/myblogs/edit/{{blogs.id}}" method="post">
+
+    {% csrf_token %}
+
+
+    <p4> Title:--------- </p4><input type="text" name="title" value="{{blogs.title}}" /><br /><br />
+
+    <p4> Subject:------ </p4><input type="text" name="subject" value="{{blogs.subject}}" /><br />
+
+    <br />
+
+
+    <p4> Text:---------- </p4> <textarea rows="5" cols="60" name="text">
+            {{blogs.text}}
+         </textarea><br>
+    <br /><br />
+    <input type="submit" value="Update" />
+
+
+
+</form>
+
+   {% for message in messages %}
+{{message}}
+    {%endfor%}
+{% else %}
+<meta http-equiv="refresh" content="0; url = /" />
+{% endif %}

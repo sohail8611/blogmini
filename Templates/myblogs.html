@@ -1,0 +1,41 @@
+{% if user.is_authenticated%}
+{% if user.is_normal%}
+
+<a href="/profile" style="color:#FF0000;">Go to Profile</a>
+<br />
+<br />
+<br />
+
+
+
+
+    {%for blog in myblogs%}
+
+<strong style="color:black;font-size:10px;">{{blog.created_at}}</strong>
+<br />
+<a href="showblogs/{{blog.id}}" class="btn btn-block py-2 btn-facebook"><span class=""></span>o:- {{blog.title}}</a>
+<br />
+<br />
+<form action="/myblogs" method="post">
+    {% csrf_token%}
+    <input type="hidden" name="blogid" value="{{blog.id}}" />
+    <input type="submit" value="delete" />
+</form>
+
+<form action="/myblogs/edit/{{blog.id}}" method="get">
+    {% csrf_token%}
+    <input type="hidden" name="blogid" value="{{blog.id}}" />
+    <input type="submit" value="Edit" />
+</form>
+
+
+    {% endfor %}
+
+{%else%}
+<meta http-equiv="refresh" content="0; url = /" />
+{% endif %}
+
+{% else %}
+<meta http-equiv="refresh" content="0; url = /" />
+{% endif %}
+
