@@ -3,9 +3,9 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import auth
-from .models import auth_user ,blog
+from .models import auth_user ,blog,comment,likes
 from django.conf import settings
-
+import time
 
 # Create your views here.
 
@@ -126,11 +126,26 @@ def myblogs(request):
         return render(request,'myblogs.html',{'myblogs':myblogs})
 
 def showblogs(request,blogid):
-    
-    if blog.objects.filter(id=blogid).exists():
+    if request.method=='POST':
+
+        comen=request.POST['comment']
+        usersname=request.POST['usersname']
         myblogs=blog.objects.filter(id=blogid).all()
         
-        return render(request,'showblogs.html',{'myblogs':myblogs})
+        com=comment(username=usersname,comment=comen,user_id=request.user.id,blogid_id=blogid)
+        com.save()
+        come=comment.objects.filter(blogid_id=blogid).all()
+           
+        return render(request,'showblogs.html',{'myblogs':myblogs,'come':come})
+
+    else:
+
+         
+         total_likes=likes.objects.filter(blogid_id=blogid).count()
+         myblogs=blog.objects.filter(id=blogid).all()
+         come=comment.objects.filter(blogid_id=blogid).all()
+         return render(request,'showblogs.html',{'myblogs':myblogs,'come':come,'total_likes':total_likes})
+
 
 def editblog(request,blogid):
     if request.method=='POST':
@@ -153,6 +168,27 @@ def editblog(request,blogid):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+def like(request,blogidd):
+    if request.method=='POST':
+        likeby=request.POST['liked_it']
+        if likes.objects.filter(user_id=request.user.id,blogid_id=blogidd).exists():
+            messages.info(request,'Already liked')
+            print('first if')
+            red=blog.objects.get(id=blogidd)
+            iddd=red.id           
+            
+            return render(request,'liked.html',{'iddd':iddd})
+        else:
+            l=likes(blogid_id=blogidd,user_id=request.user.id,text=likeby)
+            l.save()
+            print('redirecting')
+            red=blog.objects.get(id=blogidd)
+            iddd=red.id
+           
+            return render(request,'liked.html',{'iddd':iddd})
+    else:
+        print('redirecting')
+        return redirect('/')
 
 
 #what to do when user hit profile settings.
