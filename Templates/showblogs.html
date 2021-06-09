@@ -5,14 +5,38 @@
     <br />
     <br />
     <br />
-   
+
     {%for blog in myblogs%}
+
+    <form action="/showblogs/like/{{blog.id}}" method="post">
+        {% csrf_token%}
+        <input type="hidden" name="liked_it" value="LikedIT" /><br />
+        <input type="submit" value="likeit" />
+    </form>
+    <strong style="color:white;font-size:15px;">Total Likes:=>{{total_likes}}</strong><br />
     <strong style="color:white;font-size:10px;">{{blog.created_at}}</strong>
     <u><h1 style="color:red;font-size:40px;">{{blog.title}}</h1></u>
     <h1 style="color:orange;font-size:20px;">{{blog.subject}}</h1>
     <p4 style="color:white;font-size:15px;">{{blog.text}}</p4>
 
+    <br /><br /><br /><br /><br />
 
+    <form action="/showblogs/{{blog.id}}" method="post">
+        {% csrf_token%}
+
+        <input type="text" style="color:orange;font-size:10px;" placeholder="Comment" name="comment" required />
+        <input type="hidden" name="usersname" value="{{user.username}}"<br />
+        <input type="submit" value="Post" />
+    </form>
+    <br /><br />
+
+
+
+    {% endfor %}
+    <h1 style="color:red;font-size:20px;"> Comments</h1>
+    {% for comments in come%}
+    <strong style="color:white;font-size:15px;">{{comments.username}}:-</strong>
+    <p4 style="color:yellow;font-size:10px;">{{comments.comment}}</p4><br />
     {% endfor %}
 
     {% else %}
