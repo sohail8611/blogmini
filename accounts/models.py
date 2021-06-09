@@ -19,6 +19,18 @@ class blog(models.Model):
     user = models.ForeignKey(auth_user, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now_add=True)
 
+class comment(models.Model):
+    comment=models.TextField(blank=False,max_length=150)
+    username=models.TextField(blank=False,max_length=50,default='Unknown')
+    user = models.ForeignKey(auth_user, on_delete=models.CASCADE)
+    blogid = models.ForeignKey(blog, on_delete=models.CASCADE)
+
+class likes(models.Model):
+    text=models.TextField(blank=False,max_length=10)
+    user = models.ForeignKey(auth_user, on_delete=models.CASCADE)
+    blogid = models.ForeignKey(blog, on_delete=models.CASCADE)
+
+
     
 
 
