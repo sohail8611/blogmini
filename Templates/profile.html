@@ -36,7 +36,7 @@
 <strong style="color:Black;font-size:25;">Created_at {{blog.created_at}}</strong>
 <br />
 <br />
-<form action="/showblogs/{{blog.id}}" method="post">
+<form action="/showblogs/{{blog.id}}" method="get">
     {% csrf_token%}
     <input type="hidden" name="blogid" value="{{blog.id}}" />
     <input type="submit" value="View This Blog" formtarget="_blank" />
